@@ -8,7 +8,7 @@ import (
 // generate valid transaction reference numbers
 // ringing from 00 ~ 99
 
-func initRefNum(c *Client) {
+func (c *Client) initRefNum() {
 	ringCounter := ring.New(MaxRefNum)
 	for j := 0; j < MaxRefNum; j++ {
 		ringCounter.Value = []byte(fmt.Sprintf("%02d", j))
@@ -18,7 +18,7 @@ func initRefNum(c *Client) {
 	c.ringCounter = ringCounter
 }
 
-func nextRefNum(c *Client) []byte {
+func (c *Client) nextRefNum() []byte {
 	refNum := (c.ringCounter.Value).([]byte)
 	c.ringCounter = c.ringCounter.Next()
 	return refNum
